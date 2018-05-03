@@ -1,0 +1,55 @@
+spring:
+  prfiles:
+    active: develop
+    thymeleaf:
+      cache: false
+      prefix: classpath:/templates
+    jpa:
+      hibernate:
+        ddl-auto: validate
+      open-in-view: true
+      properties:
+        hibernate:
+          show_sql: true
+          format_sql: true
+          use_sql_comments: true
+          jdbc:
+            lob:
+              non_contextual_creation: true
+    datasource:
+      hikari:
+        connection-timeout: 10000
+        maximum-pool-size: 10
+        minimum-idle: 15
+        pool-name: HikariConnectionPool
+
+---
+spring:
+  profiles: production
+  datasource:
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+    url: jdbc:log4jdbc:sqlserver://localhost;databaseName=bootprod1;integratedSecurity=false;
+    username: skelton
+    password: skelton01
+    platform: mssql
+
+
+---
+spring:
+  profiles: develop
+  datasource:
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+    url: jdbc:log4jdbc:sqlserver://localhost;databaseName=bootskel1;integratedSecurity=false
+    username: skelton
+    password: skelton01
+    platform: mssql
+
+
+---
+spring:
+  profiles: test
+  datasource:
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+    url: jdbc:log4jdbc:h2:mem:test;MODE=MSSQLServer;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    username: sa
+    password:
